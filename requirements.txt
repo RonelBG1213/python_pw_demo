@@ -1,0 +1,8 @@
+requests
+pytest-rerunfailures
+playwright
+pytest
+pytest-xdist
+openpyxl
+PyPDF2
+pytest-html

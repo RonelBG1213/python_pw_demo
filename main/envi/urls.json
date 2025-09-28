@@ -1,0 +1,5 @@
+{
+    "baseURL": "https://stratpoint.com/",
+    "dashboardURL": "https://example.com/dashboard",
+    "loginURL": "https://example.com/login"
+}
