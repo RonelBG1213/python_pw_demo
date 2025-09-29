@@ -15,6 +15,7 @@ def playwright_instance():
     with sync_playwright() as playwright:
         yield playwright
 
+#set browser
 @pytest.fixture(scope="session")
 def browser(playwright_instance, browser_name):
     browser = getattr(playwright_instance, browser_name).launch(headless=False)
