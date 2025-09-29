@@ -9,15 +9,15 @@ import base64
 import os
 import logging
 
+
 @pytest.fixture(scope="session")
 def playwright_instance():
     with sync_playwright() as playwright:
         yield playwright
 
 @pytest.fixture(scope="session")
-def browser(playwright_instance):
-    browser = playwright_instance.chromium.launch(headless=True)
-
+def browser(playwright_instance, browser_name):
+    browser = getattr(playwright_instance, browser_name).launch(headless=False)
     yield browser
     browser.close()
 
