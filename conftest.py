@@ -1,27 +1,11 @@
 import pytest
 from playwright.sync_api import sync_playwright
-# from playwright_mcp import MCPServer  # Remove or comment out this line
 from main.fixtures.pageManager import PageManager
 import json
 from datetime import datetime
 import base64
 import os
 import logging
-
-# --- Add a mock MCPServer class ---
-class MCPServer:
-    def __init__(self, page, port=8123):
-        self.page = page
-        self.port = port
-        self.running = False
-
-    def start(self):
-        self.running = True
-        print(f"Mock MCPServer started on port {self.port}")
-
-    def stop(self):
-        self.running = False
-        print("Mock MCPServer stopped")
 
 @pytest.fixture(scope="session")
 def playwright_instance():
@@ -34,14 +18,6 @@ def browser(playwright_instance, browser_name):
     yield browser
     browser.close()
 
-@pytest.fixture(scope="function")
-def mcp_server(page):
-    server = MCPServer(page, port=8123)
-    server.start()
-    try:
-        yield server
-    finally:
-        server.stop()
 
 @pytest.fixture(scope="function")
 def page(browser):
