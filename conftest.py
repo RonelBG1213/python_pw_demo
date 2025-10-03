@@ -9,29 +9,45 @@ import base64
 import os
 import logging
 
-
-@pytest.fixture(scope="session")
-def playwright_instance():
-    with sync_playwright() as playwright:
-        yield playwright
-
-#set browser
-@pytest.fixture(scope="session")
-def browser(playwright_instance, browser_name):
-    browser = getattr(playwright_instance, browser_name).launch(headless=False)
-    yield browser
-    browser.close()
+def pytest_addoption(parser):
+    parser.addoption(
+        "--enable-trace", action="store_true", default=False, help="Enable Playwright tracing"
+    )
 
 @pytest.fixture(scope="function")
-def page(browser):
+def page(browser, request):
     context = browser.new_context(viewport=None)
     page = context.new_page()
+
+    # Start tracing if --enable-trace option is enabled
+    trace_enabled = request.config.getoption("--enable-trace")
+    if trace_enabled:
+        test_name = request.node.name
+        trace_dir = os.path.join(os.path.dirname(__file__), 'reports', 'trace')
+        if not os.path.exists(trace_dir):
+            os.makedirs(trace_dir)
+
+        context.tracing.start(
+            screenshots=True,
+            snapshots=True,
+            sources=True
+        )
+
     with open("main/envi/urls.json", "r") as f:
         urls = json.load(f)
     page.goto(urls["baseURL"], timeout=60000)
     page.set_default_timeout(60000)
 
     yield page
+
+    # Stop tracing and save trace file if enabled
+    if trace_enabled:
+        test_name = request.node.name
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        trace_file = os.path.join(trace_dir, f"{test_name}_{timestamp}.zip")
+        context.tracing.stop(path=trace_file)
+        print(f"Trace saved to: {trace_file}")
+
     context.close()
 
 @pytest.fixture(scope="function")

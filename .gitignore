@@ -79,5 +79,8 @@ reports/
 reports/screenshots/
 reports/trace/
 
+# But allow the trace viewer script
+!view_trace.py
+
 # Ignore all __pycache__ folders recursively
 **/__pycache__/
