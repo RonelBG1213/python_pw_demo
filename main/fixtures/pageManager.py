@@ -1,5 +1,7 @@
 import logging
 from main.functions.dashboard import dashboardFunctions
+from main.fixtures.navigation import navigationFunctions
+
 
 class PageManager:
     def __init__(self, page):
@@ -16,3 +18,4 @@ class PageManager:
             self.logger.setLevel(logging.INFO)
 
         self.dashboard = dashboardFunctions(page, self.logger)
+        self.navigation = navigationFunctions(page, self.logger)
