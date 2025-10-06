@@ -84,4 +84,6 @@ reports/trace/
 
 # Ignore all __pycache__ folders recursively
 **/__pycache__/
-venv*
+*.pyc
+*.pyo
+__pycache__/

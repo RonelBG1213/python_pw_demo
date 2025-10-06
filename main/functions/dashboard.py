@@ -28,3 +28,12 @@ class dashboardFunctions:
 
     def click_button_get_in_touch(self):
         self.actions.click_element(self.__dashboardLocators.get_in_touch_button)
+
+    def privacy_policy_link(self):
+        # self.page.pause()
+        self.logger.info("Getting url")
+        self.actions.open_href_in_new_tab(self.__dashboardLocators.privacy_policy_link)
+        self.logger.info("Set focus on new tab")
+        self.actions.focus_specific_tab(1)
+        self.logger.info("Set focus on main tab")
+        self.actions.focus_specific_tab(0)
