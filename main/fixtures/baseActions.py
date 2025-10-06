@@ -48,7 +48,9 @@ class BaseActions:
             selected_page_tab = pages[indexOfTab]
             selected_page_tab.bring_to_front()
             return selected_page_tab
-        return None
+        else:
+            print("Tab not found!")
+            return None
 
     def take_screenshot(self, addedString="screenshot", full_page=True):
         screenshots_dir = Path("reports/screenshots")
