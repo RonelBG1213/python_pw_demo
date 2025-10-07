@@ -15,7 +15,7 @@ class dashboardPage:
         self.privacy_policy_link = page.get_by_text("We value your privacy and we'").get_by_role("link", name="Privacy Notice")
         #get in touch but thug lif edition
         # self.get_in_touch_button = page.get_by_text("We value your privacy and we'").get_by_role("link", name="Privacy Notice").locator("//parent::span").locator("//parent::label").locator("//parent::li").locator("//parent::ul").locator("//parent::div").locator("//parent::div").locator("//parent::fieldset/following-sibling::div").locator("//div[@class='actions']")
-        self.get_in_touch_button = page.get_by_role("checkbox", name="GET IN TOUCH")
+        self.get_in_touch_button = page.get_by_role("button", name="GET IN TOUCH")
 
 
 
